@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Android AWS SES Sample</string>
+
+    <string name="to">To</string>
+    <string name="cc">Cc</string>
+    <string name="bcc">Bcc</string>
+    <string name="subject">Subject</string>
+    <string name="body">Body</string>
+    <string name="send">Send</string>
+
+    <string name="email_success">Email sent successfully</string>
+    <string name="email_error">Error sending email</string>
+    <string name="unexpected">Something unexpected happened</string>
+</resources>

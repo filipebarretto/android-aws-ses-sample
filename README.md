@@ -18,6 +18,7 @@ Sample Android code using AWS Android SDK with Simple Email Service (SES) to sen
   - [Setup AWS Cognito](#setup-aws-cognito)
   - [Setup AWS Simple Email Service](#setup-aws-simple-email-service)
   - [Create Android Project](#create-android-project)
+    - [Android Manifest and Gradle](#android-manifest-and-gradle)
     - [Layout file](#layout-file)
     - [Main Activity](#main-activity)
 
@@ -67,6 +68,22 @@ To send emails to any email address, you must open a support ticket demanding a 
 ### Create Android Project
 
 Open Android Studio and create a new Android Project. Choose **Empty Activity**.
+
+#### Android Manifest and Gradle
+
+Add the following dependencies to your build.gradle to use the AWS Android SDK:
+
+```
+compile 'com.amazonaws:aws-android-sdk-core:2.2.13'
+compile 'com.amazonaws:aws-android-sdk-cognito:2.2.13'
+compile 'com.amazonaws:aws-android-sdk-ses:2.2.13'
+```
+
+And the Internet permission to your Android Manifest:
+
+```
+<uses-permission android:name="android.permission.INTERNET" />
+```
 
 #### Layout file
 
@@ -136,9 +153,9 @@ Edit your activity_main.xml to include input fields for to, cc, and bcc email ad
 
 In your Main Activity, create a listener for clicks in the send email button, a function to send emails.
 
-```
-public class MainActivity extends AppCompatActivity {
+First, define the variables we will use in our MainActivity Class.
 
+```
     private EditText mToEditText;
     private EditText mCcEditText;
     private EditText mBccEditText;
@@ -149,7 +166,11 @@ public class MainActivity extends AppCompatActivity {
     private final static int SUCCESS = 0;
     private final static int ERROR = 1;
     private int result;
+```
 
+Then, on the onCreate method, link each variable to the respective layout resource and create an OnClickListener for the send button.
+
+```
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,7 +189,11 @@ public class MainActivity extends AppCompatActivity {
         // EMAIL BUTTON
         mSendButton.setOnClickListener(sendOnClickListener);
     }
+```
 
+Define sendOnClickListener to call a function to send the email
+
+```
     // LISTENER FOR SEND EMAIL BUTTON
     // THAT CALLS SEND EMAIL FUNCTION
     private View.OnClickListener sendOnClickListener = new View.OnClickListener() {
@@ -177,16 +202,11 @@ public class MainActivity extends AppCompatActivity {
             sendEmail();
         }
     };
+```
 
-    // CLEARS ALL DATA FROM ALL INPUT FIELDS
-    private void clearFields() {
-        mToEditText.setText("");
-        mCcEditText.setText("");
-        mBccEditText.setText("");
-        mSubjectEditText.setText("");
-        mBodyEditText.setText("");
-    }
+Define the function to send emails
 
+```
     // SENDS EMAIL USING AWS SIMPLE EMAIL SERVICE (SES)
     private void sendEmail() {
 
@@ -259,7 +279,20 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-}
+```
+
+Define a function to clear input fields on email success
+
+```
+    // CLEARS ALL DATA FROM ALL INPUT FIELDS
+    private void clearFields() {
+        mToEditText.setText("");
+        mCcEditText.setText("");
+        mBccEditText.setText("");
+        mSubjectEditText.setText("");
+        mBodyEditText.setText("");
+    }
+
 ```
 
 
